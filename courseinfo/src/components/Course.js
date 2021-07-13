@@ -1,11 +1,25 @@
 import React from 'react'
 
+const Display = ({ text, value, closingtext }) => <div>{text}{value}{closingtext}</div>
+
 const Course = ({ course }) => {
     return (
         <div>
             <h1>{course.name}</h1>
             <ul>
-                {course.parts.map(_part => <li key={_part.id}>{_part.name}</li>)}
+                {course.parts.map(_part => <li key={_part.id}>{_part.name}{" "}{_part.exercises}</li>)}
+                <Display 
+                    text="total of " 
+                    value={
+                        course.parts.reduce((sum, parts) => sum + parts.exercises,0)
+                                // function(sum, parts)
+                                // {
+                                //     console.log("hello",sum, parts)
+                                //     return sum + parts.exercises
+                                // },0)
+                    } 
+                    closingtext=" exercises"
+                />
             </ul>
         </div>
     )

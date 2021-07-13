@@ -30,6 +30,16 @@ const App = () => {
         name: 'Testing express server', 
         exercises: 5,
         id: 5
+      },
+      {
+        name: 'Testing React apps', 
+        exercises: 10,
+        id: 6
+      },
+      {
+        name: 'State management with redux', 
+        exercises: 11,
+        id: 7
       }
     ]
   }
