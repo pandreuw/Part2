@@ -2,50 +2,96 @@ import React from 'react'
 import Course from './components/Course'
 
 const App = () => {
-  const course = {
-    id: 1,
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      },
-      {
-        name: 'Programming a Server with NodeJS and Express', 
-        exercises: 2,
-        id: 4
-      },
-      {
-        name: 'Testing express server', 
-        exercises: 5,
-        id: 5
-      },
-      {
-        name: 'Testing React apps', 
-        exercises: 10,
-        id: 6
-      },
-      {
-        name: 'State management with redux', 
-        exercises: 11,
-        id: 7
-      }
-    ]
-  }
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }, 
+    {
+      name: 'Elissa',
+      id: 3,
+      parts: [
+        {
+          name: 'Maria',
+          exercises: 1,
+          id: 1
+        },
+        {
+          name: 'Moreno',
+          exercises: 2,
+          id: 2
+        },
+        {
+          name: 'Vega',
+          exercises: 3,
+          id: 3
+        }
+      ]
+    },
+    {
+      name: 'Saria',
+      id: 4,
+      parts: [
+        {
+          name: 'Regina',
+          exercises: 1,
+          id: 1
+        },
+        {
+          name: 'Moreno',
+          exercises: 2,
+          id: 2
+        },
+        {
+          name: 'Vega',
+          exercises: 3,
+          id: 3
+        }
+      ]
+    }
+
+  ]
 
 
-  return <Course course={course} />
+  return <Course courses={courses} />
 
   }
 
