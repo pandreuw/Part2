@@ -5,9 +5,10 @@ import Contact from './components/Contact'
 const App = () => {
 
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '416-123-4567'}
   ])
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
   const message =`The name "${newName}" was already added to the phonebook
 The field will be erased.`
   const addContact = (event) => {
@@ -18,11 +19,13 @@ The field will be erased.`
       console.log("Duplicated name");
       window.alert(message);
       setNewName('')
+      setNewNumber('')
     } else {
       console.log("NOT Duplicated name");
-      const noteObject = { name: newName }
+      const noteObject = { name: newName, number: newNumber }
       setPersons(persons.concat(noteObject))
       setNewName('')
+      setNewNumber('')
     }
 
   }
@@ -30,6 +33,11 @@ The field will be erased.`
   const handlePersonsChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
+  }
+
+  const hnadelNumberChange = (event) => {
+    console.log(event.target.value)
+    setNewNumber(event.target.value)
   }
 
   return (
@@ -41,6 +49,12 @@ The field will be erased.`
             name: <input
               value={newName}
               onChange={handlePersonsChange}
+            />
+          </div>
+          <div>
+            number: <input
+              value={newNumber}
+              onChange={hnadelNumberChange}
             />
           </div>
           <div>
