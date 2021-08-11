@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Contact from './components/Contact'
-import ApplyFilter from './components/ApplyFilter'
+import { ApplyFilter, FilterInput } from './components/ApplyFilter'
 import PersonForm from './components/PersonForm'
+import DisplayContacts from './components/DisplayContacts'
 
 const App = () => {
 
@@ -40,17 +40,17 @@ The field will be erased.`
       setNewNumber('')
       // Following required to reset the filter and update the list with the new entry
       //unable to add a reduce
-      setFilter('')
+      setFilter({ enabled: true, filter: '' })
     }
   }
 
   const handlePersonsChange = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
@@ -59,29 +59,16 @@ The field will be erased.`
   }
 
   const contactsToShow = ApplyFilter(Filter, persons)
-  console.log('contacts to show', contactsToShow);
+  //console.log('contacts to show', contactsToShow);
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        Filter show with <input
-          value={Filter.filter}
-          onChange={handleFilterChange}
-        />
-      </div>
+      <FilterInput filter={Filter} callOnChange={handleFilterChange} />
       <h2>Add a new</h2>
-      <div>
-        <PersonForm calladdContact={addContact} callPersonchange={handlePersonsChange} callNumberchange={handleNumberChange} />
-      </div>
+      <PersonForm calladdContact={addContact} callPersonchange={handlePersonsChange} defaultPerson={newName} callNumberchange={handleNumberChange} defaultNumber={newNumber} />
       <h2>Numbers</h2>
-      <div>
-        <ul>
-          {/* {persons.map(person => { return <Contact key={person.name} contact={person} /> })} */}
-          {contactsToShow.map(person => { return <Contact key={person.name} contact={person} /> })}
-        </ul>
-      </div>
-      {/* <div>debug: {personFilter.length}</div> */}
+      <DisplayContacts ContactList={contactsToShow} />
     </div>
   )
 }

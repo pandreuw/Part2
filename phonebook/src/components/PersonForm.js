@@ -1,25 +1,27 @@
 import React from 'react'
 
-
-
-const PersonForm = ({ calladdContact, callPersonchange, callNumberchange }) => {
+const PersonForm = ({ calladdContact, callPersonchange, defaultPerson, callNumberchange, defaultNumber }) => {
   //console.log('contact component',contact);
   return (
-    <form onSubmit={calladdContact}>
-      <div>
-        name: <input
-          onChange={callPersonchange}
-        />
-      </div>
-      <div>
-        number: <input
-          onChange={callNumberchange}
-        />
-      </div>
-      <div>
-        <button type="submit">add</button>
-      </div>
-    </form>
+    <div>
+      <form onSubmit={calladdContact}>
+        <div>
+          name: <input
+            value={defaultPerson}
+            onChange={callPersonchange}
+          />
+        </div>
+        <div>
+          number: <input
+            value={defaultNumber}
+            onChange={callNumberchange}
+          />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+    </div>
   )
 }
 

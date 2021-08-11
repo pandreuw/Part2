@@ -1,4 +1,6 @@
-const ApplyFilter = (filter, contacts) => {
+import React from 'react'
+
+export const ApplyFilter = (filter, contacts) => {
   // console.log('filter enabled', filter.enabled);
   // console.log('filter filter', filter.filter);
   // console.log('object value', contacts);
@@ -12,4 +14,15 @@ const ApplyFilter = (filter, contacts) => {
   return noteObject
 }
 
-export default ApplyFilter
+export const FilterInput = ({ filter, callOnChange }) => {
+  return (
+    <div>
+      Filter show with <input
+        value={filter.filter}
+        onChange={callOnChange}
+      />
+    </div>
+  )
+}
+
+
