@@ -1,20 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { ApplyFilter, FilterInput } from './components/ApplyFilter'
 import PersonForm from './components/PersonForm'
 import DisplayContacts from './components/DisplayContacts'
 
 const App = () => {
 
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' },
-    { name: 'Gerardo Moreno', number: '99999999' },
-    { name: 'Leslie Vega', number: '3333333333' },
-    { name: 'Saria Regina Moreno Vega', number: '88888888' },
-    { name: 'Elissa Maria Moreno Vega', number: '666666666666' }
-  ])
+  const [persons, setPersons] = useState([])
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
@@ -22,6 +14,18 @@ const App = () => {
 
   const message = `The name "${newName}" was already added to the phonebook
 The field will be erased.`
+
+  const hook = () => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }
+
+  useEffect(hook, [])
 
   const addContact = (event) => {
     event.preventDefault()
