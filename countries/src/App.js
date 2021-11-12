@@ -12,7 +12,7 @@ const App = () => {
   const hook = () => {
     console.log('effect')
     axios
-      .get('https://restcountries.eu/rest/v2/all')
+      .get('https://restcountries.com/v3.1/all')
       .then(response => {
         console.log('promise fulfilled')
         setCountries(response.data)
@@ -26,8 +26,9 @@ const App = () => {
   }
 
   var countriesToShow = ApplyFilter(Filter, countries)
-  console.clear()
+  //console.clear()
   // countriesToShow = countriesToShow.length>10 ? [] : countriesToShow;
+  console.log('filtered countries', countriesToShow);
   console.log(countriesToShow.length);
   // console.log(countries.length);
 
@@ -35,7 +36,7 @@ const App = () => {
 
     <div>
       <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
-      <DisplayCountries CountriesList={countriesToShow}/>
+      <DisplayCountries CountriesList={countriesToShow} />
     </div>
 
   )

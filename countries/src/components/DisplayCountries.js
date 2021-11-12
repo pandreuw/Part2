@@ -1,8 +1,11 @@
 import React from 'react'
 
+//https://reactjs.org/docs/lists-and-keys.html#keys
+//revisar el link de arriba para encontrar la respuesta a los id
+
 const PrintCountryList = ({ _country }) => {
     return (
-        <ul>{_country.name}</ul>
+        <ul>{_country.name.common}</ul>
     )
 }
 
@@ -41,7 +44,7 @@ const DisplayCountries = ({ CountriesList }) => {
         return (
             <div>
                 <ul>
-                {CountriesList.map(country => { return <PrintCountryData key={country.name} _country={country} />})}
+                {CountriesList.map(country => { return <PrintCountryData key={country.id} _country={country} />})}
                 </ul>
             </div>
         )
@@ -51,7 +54,7 @@ const DisplayCountries = ({ CountriesList }) => {
             <div>
                 <ul>
                     {/* {persons.map(person => { return <Contact key={person.name} contact={person} /> })} */}
-                    {CountriesList.map(country => { return <PrintCountryList key={country.name} _country={country} /> })}
+                    {CountriesList.map(country => { return <PrintCountryList key={country.id} _country={country} /> })}
                 </ul>
             </div>
         )
