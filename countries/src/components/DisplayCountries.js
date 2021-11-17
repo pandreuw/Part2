@@ -12,13 +12,13 @@ const PrintCountryList = ({ _country }) => {
 const PrintCountryData = ({ _country }) => {
     return (
         <>
-            <h2>{_country.name}</h2>
+            <h2>{_country.name.common}</h2>
             <ul>Capital: {_country.capital}</ul>
             <ul>Population: {_country.population}</ul>
             <h3>Languages</h3>
-            <ul>
-                {_country.languages.map(lang => {return <PrintLanguages key={lang.name} languages={lang}/>})}
-            </ul>
+            {/* <ul>
+                {_country.languages.map(lang => {return <PrintLanguages key={lang.id} languages={lang}/>})}
+            </ul> */}
             <img src={_country.flag} />
         </>
     )
