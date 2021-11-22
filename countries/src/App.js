@@ -24,7 +24,7 @@ const App = () => {
   const handleFilterChange = (event) => {
     setFilter({ enabled: event.target.value !== '' ? true : false, filter: event.target.value })
   }
-
+console.log('filtering');
   var countriesToShow = ApplyFilter(Filter, countries)
   //console.clear()
   // countriesToShow = countriesToShow.length>10 ? [] : countriesToShow;
@@ -36,7 +36,7 @@ const App = () => {
 
     <div>
       <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
-      <DisplayCountries CountriesList={countriesToShow} />
+      <DisplayCountries key={countriesToShow.id} CountriesList={countriesToShow} />
     </div>
 
   )
