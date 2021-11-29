@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
-
-
+import React from 'react'
 
 //https://reactjs.org/docs/lists-and-keys.html#keys
 //revisar el link de arriba para encontrar la respuesta a los id
 
-const PrintCountryList = ({ _country, buttonpressed }) => {
+export const PrintCountryList = ({ _country, buttonpressed }) => {
     return (
         <>
             <ul>
@@ -15,7 +13,50 @@ const PrintCountryList = ({ _country, buttonpressed }) => {
     )
 }
 
-const PrintCountryData = ({ _country }) => {
+
+
+
+const PrintLanguages = ({ languages }) => {
+
+    return (
+        <><li>{languages}</li></>
+    )
+}
+
+// const DisplayCountries = ({ CountriesList, callOnChange }) => {
+//     if (CountriesList.length > 10) {
+//         return (
+//             <div>
+//                 <ul>
+//                     Too many matches, specify another filter.
+//                 </ul>
+//             </div>
+//         )
+//     }
+//     else if (CountriesList.length === 1) {
+//         return (
+//             <div>
+//                 <ul>
+//                     {CountriesList.map(country => { return <PrintCountryData key={country.id} _country={country} /> })}
+//                     {/* {CountriesList.map(country => { return <PrintCountryData _country={country} /> })} */}
+//                 </ul>
+//             </div>
+//         )
+//     }
+//     else {
+//         // console.log('displaycountries else bracket');
+//         return (
+//             <div>
+//                 <ul>
+//                     {CountriesList.map(country => { return <PrintCountryList key={country.id} _country={country} buttonpressed={callOnChange}/> })}
+//                 </ul>
+//             </div>
+//         )
+//     }
+
+// }
+
+export const PrintCountryData = ({ _country }) => {
     // From this website point me to the right direction to get the correct key to later iterate using the map
     // https://stackoverflow.com/questions/22380930/how-to-get-property-value-in-js-object-when-key-is-unknown
     var lang = []
@@ -37,45 +78,3 @@ const PrintCountryData = ({ _country }) => {
     )
 }
 
-
-const PrintLanguages = ({ languages }) => {
-
-    return (
-        <><li>{languages}</li></>
-    )
-}
-
-const DisplayCountries = ({ CountriesList, callOnChange }) => {
-    if (CountriesList.length > 10) {
-        return (
-            <div>
-                <ul>
-                    Too many matches, specify another filter.
-                </ul>
-            </div>
-        )
-    }
-    else if (CountriesList.length === 1) {
-        return (
-            <div>
-                <ul>
-                    {CountriesList.map(country => { return <PrintCountryData key={country.id} _country={country} /> })}
-                    {/* {CountriesList.map(country => { return <PrintCountryData _country={country} /> })} */}
-                </ul>
-            </div>
-        )
-    }
-    else {
-        // console.log('displaycountries else bracket');
-        return (
-            <div>
-                <ul>
-                    {CountriesList.map(country => { return <PrintCountryList key={country.id} _country={country} buttonpressed={callOnChange}/> })}
-                </ul>
-            </div>
-        )
-    }
-
-}
-
-export default DisplayCountries

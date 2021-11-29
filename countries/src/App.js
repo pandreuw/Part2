@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { ApplyFilter, FilterInput } from './components/ApplyFilter'
-import DisplayCountries from './components/DisplayCountries'
+import { PrintCountryData, PrintCountryList} from './components/DisplayCountries'
 
 
 const App = () => {
@@ -29,7 +29,7 @@ const App = () => {
   const handleFilterChange = (event) => {
     setFilter({ enabled: event.target.value !== '' ? true : false, filter: event.target.value })
   }
-console.log('filtering');
+  console.log('filtering');
   var countriesToShow = ApplyFilter(Filter, countries)
   //console.clear()
   // countriesToShow = countriesToShow.length>10 ? [] : countriesToShow;
@@ -37,14 +37,48 @@ console.log('filtering');
   console.log(countriesToShow.length);
   // console.log(countries.length);
 
-  return (
+  if (countriesToShow.length > 10) {
+    return (
+      <div>
+        <ul>
+          <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
+          Too many matches, specify another filter.
+        </ul>
+      </div>
+    )
+  }
+  else if (countriesToShow.length === 1) {
+    return (
+      <div>
+        <ul>
+          <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
+          {countriesToShow.map(country => { return <PrintCountryData key={country.id} _country={country} /> })}
+          {/* {CountriesList.map(country => { return <PrintCountryData _country={country} /> })} */}
+        </ul>
+      </div>
+    )
+  }
+  else {
+    // console.log('displaycountries else bracket');
+    return (
+      <div>
+        <ul>
+          <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
+          {countriesToShow.map(country => { return <PrintCountryList key={country.id} _country={country} buttonpressed={buttonClicked} /> })}
+        </ul>
+      </div>
+    )
+  }
 
-    <div>
-      <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
-      <DisplayCountries key={countriesToShow.id} CountriesList={countriesToShow} callOnChange={buttonClicked} />
-    </div>
 
-  )
+  // return (
+
+  //   <div>
+  //     <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
+  //     <DisplayCountries key={countriesToShow.id} CountriesList={countriesToShow} callOnChange={buttonClicked} />
+  //   </div>
+
+  // )
 }
 
 export default App;
