@@ -21,6 +21,11 @@ const App = () => {
 
   useEffect(hook, [])
 
+  const buttonClicked = (event) => {
+    event.preventDefault()
+    console.log('button clicked', event.target)
+  }
+
   const handleFilterChange = (event) => {
     setFilter({ enabled: event.target.value !== '' ? true : false, filter: event.target.value })
   }
@@ -36,7 +41,7 @@ console.log('filtering');
 
     <div>
       <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
-      <DisplayCountries key={countriesToShow.id} CountriesList={countriesToShow} />
+      <DisplayCountries key={countriesToShow.id} CountriesList={countriesToShow} callOnChange={buttonClicked} />
     </div>
 
   )

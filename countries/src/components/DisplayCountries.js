@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+
 
 //https://reactjs.org/docs/lists-and-keys.html#keys
 //revisar el link de arriba para encontrar la respuesta a los id
 
-const PrintCountryList = ({ _country }) => {
+const PrintCountryList = ({ _country, buttonpressed }) => {
     return (
         <>
             <ul>
-                {_country.name.common}
+                {_country.name.common}<button onClick={buttonpressed}>show</button>
             </ul>
         </>
     )
 }
 
 const PrintCountryData = ({ _country }) => {
-    // var lang = _country.languages.map((language) => language)
+    // From this website point me to the right direction to get the correct key to later iterate using the map
+    // https://stackoverflow.com/questions/22380930/how-to-get-property-value-in-js-object-when-key-is-unknown
     var lang = []
     for (var key in _country.languages) {
         console.log('language is ', _country.languages[key]); // 81.25
@@ -27,7 +30,7 @@ const PrintCountryData = ({ _country }) => {
             <ul>Population: {_country.population}</ul>
             <h3>Languages</h3>
             <ul>
-                {lang.map(countrylanguage =>{return<PrintLanguages languages={countrylanguage} />})}
+                {lang.map(countrylanguage => { return <PrintLanguages languages={countrylanguage} /> })}
             </ul>
             <img src={_country.flags.png} />
         </>
@@ -38,11 +41,11 @@ const PrintCountryData = ({ _country }) => {
 const PrintLanguages = ({ languages }) => {
 
     return (
-       <><li>{languages}</li></>
+        <><li>{languages}</li></>
     )
 }
 
-const DisplayCountries = ({ CountriesList }) => {
+const DisplayCountries = ({ CountriesList, callOnChange }) => {
     if (CountriesList.length > 10) {
         return (
             <div>
@@ -63,13 +66,11 @@ const DisplayCountries = ({ CountriesList }) => {
         )
     }
     else {
-        console.log('displaycountries else bracket');
+        // console.log('displaycountries else bracket');
         return (
             <div>
                 <ul>
-                    {/* {CountriesList.map(country => { return <ul key={country.id}>{country.name.common}</ul> })} */}
-                    {CountriesList.map(country => { return <PrintCountryList key={country.id} _country={country} /> })}
-                    {/* {CountriesList.map(country => { return <PrintCountryList _country={country} /> })} */}
+                    {CountriesList.map(country => { return <PrintCountryList key={country.id} _country={country} buttonpressed={callOnChange}/> })}
                 </ul>
             </div>
         )
