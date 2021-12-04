@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { ApplyFilter, FilterInput } from './components/ApplyFilter'
 import { PrintCountryData, PrintCountryList} from './components/DisplayCountries'
-
+import CountryForm from './components/CountryForm'
 
 const App = () => {
 
@@ -24,6 +24,12 @@ const App = () => {
   const buttonClicked = (event) => {
     event.preventDefault()
     console.log('button clicked', event.target)
+  }
+  
+
+  const ShowSingleCountry = (event) => {
+    event.preventDefault()
+    console.log('ShowSingleCountry', event.target.value)
   }
 
   const handleFilterChange = (event) => {
@@ -64,7 +70,7 @@ const App = () => {
       <div>
         <ul>
           <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
-          {countriesToShow.map(country => { return <PrintCountryList key={country.id} _country={country} buttonpressed={buttonClicked} /> })}
+          {countriesToShow.map(country => { return <CountryForm key={country.id} CountryName={country.name.common} callShowCountry={ShowSingleCountry} /> })}
         </ul>
       </div>
     )
