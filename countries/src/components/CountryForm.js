@@ -5,7 +5,8 @@ const CountryForm = ({ CountryName, callShowCountry }) => {
         <div>
             <form onSubmit={callShowCountry}>
                 <div>
-                    {CountryName}<button type="submit">Show</button>
+                    {CountryName}     <button value={CountryName} onClick={callShowCountry}>Show</button>
+                    {/* {CountryName}     <button type="submit" value={CountryName}>Show</button> */}
                 </div>
             </form>
         </div>

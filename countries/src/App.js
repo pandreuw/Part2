@@ -30,6 +30,7 @@ const App = () => {
   const ShowSingleCountry = (event) => {
     event.preventDefault()
     console.log('ShowSingleCountry', event.target.value)
+    setFilter({ enabled: true, filter: event.target.value })
   }
 
   const handleFilterChange = (event) => {
@@ -58,7 +59,7 @@ const App = () => {
       <div>
         <ul>
           <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
-          {countriesToShow.map(country => { return <PrintCountryData key={country.id} _country={country} /> })}
+          {countriesToShow.map(country => { return <PrintCountryData key={country.name.common} _country={country} /> })}
           {/* {CountriesList.map(country => { return <PrintCountryData _country={country} /> })} */}
         </ul>
       </div>
@@ -70,21 +71,12 @@ const App = () => {
       <div>
         <ul>
           <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
-          {countriesToShow.map(country => { return <CountryForm key={country.id} CountryName={country.name.common} callShowCountry={ShowSingleCountry} /> })}
+          {countriesToShow.map(country => { return <CountryForm key={country.name.common} CountryName={country.name.common} callShowCountry={ShowSingleCountry} /> })}
         </ul>
       </div>
     )
   }
 
-
-  // return (
-
-  //   <div>
-  //     <FilterInput text="Find countries" filter={Filter} callOnChange={handleFilterChange} />
-  //     <DisplayCountries key={countriesToShow.id} CountriesList={countriesToShow} callOnChange={buttonClicked} />
-  //   </div>
-
-  // )
 }
 
 export default App;

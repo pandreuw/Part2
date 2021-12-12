@@ -7,7 +7,7 @@ export const PrintCountryList = ({ _country, buttonpressed }) => {
     return (
         <>
             <ul>
-                {_country.name.common}<button onClick={buttonpressed}>show</button>
+                {_country.name.common}<button onClick={(e) => buttonpressed(_country.id, e)}>Show</button>
             </ul>
         </>
     )
@@ -17,7 +17,6 @@ export const PrintCountryList = ({ _country, buttonpressed }) => {
 
 
 const PrintLanguages = ({ languages }) => {
-
     return (
         <><li>{languages}</li></>
     )
@@ -61,7 +60,7 @@ export const PrintCountryData = ({ _country }) => {
     // https://stackoverflow.com/questions/22380930/how-to-get-property-value-in-js-object-when-key-is-unknown
     var lang = []
     for (var key in _country.languages) {
-        console.log('language is ', _country.languages[key]); // 81.25
+        // console.log('language is ', _country.languages[key]); // 81.25
         lang.push(_country.languages[key])
     }
     return (
@@ -71,7 +70,7 @@ export const PrintCountryData = ({ _country }) => {
             <ul>Population: {_country.population}</ul>
             <h3>Languages</h3>
             <ul>
-                {lang.map(countrylanguage => { return <PrintLanguages languages={countrylanguage} /> })}
+                {lang.map(countrylanguage => { return <PrintLanguages key={countrylanguage} languages={countrylanguage} /> })}
             </ul>
             <img src={_country.flags.png} />
         </>
