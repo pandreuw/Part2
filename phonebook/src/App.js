@@ -39,12 +39,19 @@ The field will be erased.`
     } else {
       console.log("NOT Duplicated name");
       const noteObject = { name: newName, number: newNumber }
-      setPersons(persons.concat(noteObject))
-      setNewName('')
-      setNewNumber('')
-      // Following required to reset the filter and update the list with the new entry
-      //unable to add a reduce
-      setFilter({ enabled: true, filter: '' })
+      // setPersons(persons.concat(noteObject))
+      axios
+        .post('http://localhost:3001/persons', noteObject)
+        .then(response => {
+          setPersons(persons.concat(noteObject))
+          // setNewNote('')
+          setNewName('')
+          setNewNumber('')
+          // Following required to reset the filter and update the list with the new entry
+          //unable to add a reduce
+          setFilter({ enabled: true, filter: '' })
+        })
+
     }
   }
 
