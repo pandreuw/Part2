@@ -3,11 +3,11 @@ import axios from 'axios'
 import { ApplyFilter, FilterInput } from './components/ApplyFilter'
 import PersonForm from './components/PersonForm'
 import DisplayContacts from './components/DisplayContacts'
+import personsService from './services/persons'
 
 const App = () => {
 
   const [persons, setPersons] = useState([])
-
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [Filter, setFilter] = useState({ enabled: true, filter: '' })
@@ -15,17 +15,16 @@ const App = () => {
   const message = `The name "${newName}" was already added to the phonebook
 The field will be erased.`
 
-  const hook = () => {
+
+  useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
+    personsService
+      .getAll()
       .then(response => {
         console.log('promise fulfilled')
-        setPersons(response.data)
+        setPersons(response)
       })
-  }
-
-  useEffect(hook, [])
+  }, [])
 
   const addContact = (event) => {
     event.preventDefault()
@@ -39,16 +38,13 @@ The field will be erased.`
     } else {
       console.log("NOT Duplicated name");
       const noteObject = { name: newName, number: newNumber }
-      // setPersons(persons.concat(noteObject))
-      axios
-        .post('http://localhost:3001/persons', noteObject)
+
+      personsService
+        .create(noteObject)
         .then(response => {
           setPersons(persons.concat(noteObject))
-          // setNewNote('')
           setNewName('')
           setNewNumber('')
-          // Following required to reset the filter and update the list with the new entry
-          //unable to add a reduce
           setFilter({ enabled: true, filter: '' })
         })
 
@@ -56,12 +52,10 @@ The field will be erased.`
   }
 
   const handlePersonsChange = (event) => {
-    // console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumberChange = (event) => {
-    // console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
@@ -70,7 +64,6 @@ The field will be erased.`
   }
 
   const contactsToShow = ApplyFilter(Filter, persons)
-  //console.log('contacts to show', contactsToShow);
 
   return (
     <div>
