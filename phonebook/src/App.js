@@ -11,6 +11,9 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [Filter, setFilter] = useState({ enabled: true, filter: '' })
+  const [DisplayedPersons, setDisplayPersons] = useState([])
+
+  var contactsToShow
 
   const message = `The name "${newName}" was already added to the phonebook
 The field will be erased.`
@@ -21,8 +24,9 @@ The field will be erased.`
     personsService
       .getAll()
       .then(response => {
-        console.log('promise fulfilled')
+        console.log('promise fulfilled **getAll**')
         setPersons(response)
+        setDisplayPersons(ApplyFilter(Filter, response))
       })
   }, [])
 
@@ -42,13 +46,29 @@ The field will be erased.`
       personsService
         .create(noteObject)
         .then(response => {
+          console.log('promise fulfilled **create**')
           setPersons(persons.concat(noteObject))
           setNewName('')
           setNewNumber('')
           setFilter({ enabled: true, filter: '' })
+          setDisplayPersons(ApplyFilter(Filter, persons))
         })
 
     }
+  }
+
+  const deleteContact = id => {
+    console.log('deleteContact event', id);
+    const contact = persons.find(n => n.id === id)
+    console.log('contact to delete is ', contact.name)
+    personsService
+      .deleteContact(id)
+      .then(response => {
+        console.log('promise fulfilled **deleteContact**')
+        setPersons(persons.map(person => person.id !== id ? person : response))
+        setDisplayPersons(ApplyFilter(Filter, persons))
+        //setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
   }
 
   const handlePersonsChange = (event) => {
@@ -61,10 +81,11 @@ The field will be erased.`
 
   const handleFilterChange = (event) => {
     setFilter({ enabled: event.target.value !== '' ? true : false, filter: event.target.value })
+    setDisplayPersons(ApplyFilter(Filter, persons))
   }
 
-  const contactsToShow = ApplyFilter(Filter, persons)
 
+  console.log('contact to show', DisplayedPersons);
   return (
     <div>
       <h2>Phonebook</h2>
@@ -72,7 +93,11 @@ The field will be erased.`
       <h2>Add a new</h2>
       <PersonForm calladdContact={addContact} callPersonchange={handlePersonsChange} defaultPerson={newName} callNumberchange={handleNumberChange} defaultNumber={newNumber} />
       <h2>Numbers</h2>
-      <DisplayContacts ContactList={contactsToShow} />
+      {DisplayedPersons.map(contact =>
+        <DisplayContacts
+          key={contact.id}
+          Person={contact}
+          DeletePerson={() => deleteContact(contact.id)} />)}
     </div>
   )
 }
