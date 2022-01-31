@@ -13,10 +13,12 @@ const App = () => {
   const [Filter, setFilter] = useState({ enabled: true, filter: '' })
   const [DisplayedPersons, setDisplayPersons] = useState([])
 
-  var contactsToShow
+  const [ContactToDelete, setContactToDelete] = useState('')
 
   const message = `The name "${newName}" was already added to the phonebook
 The field will be erased.`
+
+  const DeleteContactMessage = `Delete ${ContactToDelete}?`
 
 
   useEffect(() => {
@@ -26,7 +28,8 @@ The field will be erased.`
       .then(response => {
         console.log('promise fulfilled **getAll**')
         setPersons(response)
-        setDisplayPersons(ApplyFilter(Filter, response))
+        setDisplayPersons(response)
+        // setDisplayPersons(ApplyFilter(Filter, response))
       })
   }, [])
 
@@ -47,28 +50,42 @@ The field will be erased.`
         .create(noteObject)
         .then(response => {
           console.log('promise fulfilled **create**')
-          setPersons(persons.concat(noteObject))
+          setPersons(persons.concat(response))
           setNewName('')
           setNewNumber('')
           setFilter({ enabled: true, filter: '' })
-          setDisplayPersons(ApplyFilter(Filter, persons))
+          setDisplayPersons(persons.concat(response))
+          // setDisplayPersons(ApplyFilter(Filter, persons))
         })
 
     }
   }
 
   const deleteContact = id => {
-    console.log('deleteContact event', id);
-    const contact = persons.find(n => n.id === id)
-    console.log('contact to delete is ', contact.name)
-    personsService
-      .deleteContact(id)
-      .then(response => {
-        console.log('promise fulfilled **deleteContact**')
-        setPersons(persons.map(person => person.id !== id ? person : response))
-        setDisplayPersons(ApplyFilter(Filter, persons))
-        //setNotes(notes.map(note => note.id !== id ? note : returnedNote))
-      })
+
+    console.log('deleteContact event id:', id);
+    const contactinfo = persons.find(n => n.id === id)
+    setContactToDelete(contactinfo.name)
+    console.log('contact to delete is ', contactinfo.name)
+
+    const result = window.confirm(`Delete ${contactinfo.name}?`);
+
+    if (result) {
+      personsService
+        .deleteContact(id)
+        .then(response => {
+          console.log('promise fulfilled **deleteContact**')
+
+          const findObject = persons.findIndex(x => x.id === id)
+          var objectToPass = persons
+          var tempData = objectToPass.splice(findObject, 1)
+          setNewName('')
+          setNewNumber('')
+          setFilter({ enabled: false, filter: '' })
+          setPersons(objectToPass)
+          setDisplayPersons(objectToPass)
+        })
+    }
   }
 
   const handlePersonsChange = (event) => {
@@ -81,11 +98,15 @@ The field will be erased.`
 
   const handleFilterChange = (event) => {
     setFilter({ enabled: event.target.value !== '' ? true : false, filter: event.target.value })
-    setDisplayPersons(ApplyFilter(Filter, persons))
+    // setDisplayPersons(ApplyFilter(Filter, persons))
+
+    if (event.target.value !== '') { setDisplayPersons(persons.filter(filtering => filtering.name.includes(event.target.value))) }
+    else { setDisplayPersons(persons) }
+
   }
 
 
-  console.log('contact to show', DisplayedPersons);
+  //console.log('contact to show', DisplayedPersons);
   return (
     <div>
       <h2>Phonebook</h2>
