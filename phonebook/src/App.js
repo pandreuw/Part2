@@ -38,8 +38,22 @@ The field will be erased.`
     console.log("Add contact names");
     const OnlyNames = persons.map(onlyname => onlyname.name)
     if (OnlyNames.includes(newName)) {
-      console.log("Duplicated name");
-      window.alert(message);
+      const result = window.confirm(`${newName} is already added to phonebook, replace
+old number with a new one?`);
+      if (result) {
+        console.log("Replace old number");
+        const noteObject = persons.find(({ name }) => name === newName)
+        noteObject.number = newNumber
+        console.log(noteObject);
+        personsService
+          .update(noteObject.id, noteObject)
+          .then(returnedPerson => {
+            console.log('promise fulfilled **update**')
+            setPersons(persons.map(person => person.id !== noteObject.id ? person : returnedPerson))
+          }
+          )
+      }
+      console.log("Replace old number Cancelled");
       setNewName('')
       setNewNumber('')
     } else {
