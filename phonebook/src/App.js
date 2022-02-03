@@ -4,6 +4,7 @@ import { ApplyFilter, FilterInput } from './components/ApplyFilter'
 import PersonForm from './components/PersonForm'
 import DisplayContacts from './components/DisplayContacts'
 import personsService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
 
@@ -12,8 +13,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [Filter, setFilter] = useState({ enabled: true, filter: '' })
   const [DisplayedPersons, setDisplayPersons] = useState([])
-
   const [ContactToDelete, setContactToDelete] = useState('')
+  const [AddedPersonMessage, setAddedPersonMessage] = useState('Message Initialization...')
 
   const message = `The name "${newName}" was already added to the phonebook
 The field will be erased.`
@@ -29,7 +30,12 @@ The field will be erased.`
         console.log('promise fulfilled **getAll**')
         setPersons(response)
         setDisplayPersons(response)
-        // setDisplayPersons(ApplyFilter(Filter, response))
+        setAddedPersonMessage(
+          `${newName}`
+        )
+        setTimeout(() => {
+          setAddedPersonMessage(null)
+        }, 1)
       })
   }, [])
 
@@ -69,7 +75,12 @@ old number with a new one?`);
           setNewNumber('')
           setFilter({ enabled: true, filter: '' })
           setDisplayPersons(persons.concat(response))
-          // setDisplayPersons(ApplyFilter(Filter, persons))
+          setAddedPersonMessage(
+            `Added ${newName}`
+          )
+          setTimeout(() => {
+            setAddedPersonMessage(null)
+          }, 5000)
         })
 
     }
@@ -124,6 +135,7 @@ old number with a new one?`);
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={AddedPersonMessage} />
       <FilterInput filter={Filter} callOnChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonForm calladdContact={addContact} callPersonchange={handlePersonsChange} defaultPerson={newName} callNumberchange={handleNumberChange} defaultNumber={newNumber} />
