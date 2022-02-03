@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ApplyFilter, FilterInput } from './components/ApplyFilter'
+import { FilterInput } from './components/ApplyFilter'
 import PersonForm from './components/PersonForm'
 import DisplayContacts from './components/DisplayContacts'
 import personsService from './services/persons'
@@ -12,12 +12,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [Filter, setFilter] = useState({ enabled: true, filter: '' })
   const [DisplayedPersons, setDisplayPersons] = useState([])
-  const [ContactToDelete, setContactToDelete] = useState('')
   const [errorMessage, setErrorMessage] = useState('some error happened...')
-  const [errorStyle, setErrorStyle]=useState('error')
-
-  const DeleteContactMessage = `Delete ${ContactToDelete}?`
-
+  const [errorStyle, setErrorStyle] = useState('error')
 
   useEffect(() => {
     console.log('effect')
@@ -28,9 +24,7 @@ const App = () => {
         setPersons(response)
         setDisplayPersons(response)
         setErrorStyle('error')
-        setErrorMessage(
-          `${newName}`
-        )
+        setErrorMessage(`${setErrorMessage}`)
         setTimeout(() => {
           setErrorMessage(null)
         }, 1)
@@ -89,7 +83,6 @@ old number with a new one?`);
 
     console.log('deleteContact event id:', id);
     const contactinfo = persons.find(n => n.id === id)
-    setContactToDelete(contactinfo.name)
     console.log('contact to delete is ', contactinfo.name)
 
     const result = window.confirm(`Delete ${contactinfo.name}?`);
@@ -100,9 +93,7 @@ old number with a new one?`);
         .then(response => {
           console.log('promise fulfilled **deleteContact**')
 
-          const findObject = persons.findIndex(x => x.id === id)
           var objectToPass = persons
-          var tempData = objectToPass.splice(findObject, 1)
           setNewName('')
           setNewNumber('')
           setFilter({ enabled: false, filter: '' })
