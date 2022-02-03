@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { ApplyFilter, FilterInput } from './components/ApplyFilter'
 import PersonForm from './components/PersonForm'
 import DisplayContacts from './components/DisplayContacts'
@@ -14,10 +13,8 @@ const App = () => {
   const [Filter, setFilter] = useState({ enabled: true, filter: '' })
   const [DisplayedPersons, setDisplayPersons] = useState([])
   const [ContactToDelete, setContactToDelete] = useState('')
-  const [AddedPersonMessage, setAddedPersonMessage] = useState('Message Initialization...')
-
-  const message = `The name "${newName}" was already added to the phonebook
-The field will be erased.`
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
+  const [errorStyle, setErrorStyle]=useState('error')
 
   const DeleteContactMessage = `Delete ${ContactToDelete}?`
 
@@ -30,11 +27,12 @@ The field will be erased.`
         console.log('promise fulfilled **getAll**')
         setPersons(response)
         setDisplayPersons(response)
-        setAddedPersonMessage(
+        setErrorStyle('error')
+        setErrorMessage(
           `${newName}`
         )
         setTimeout(() => {
-          setAddedPersonMessage(null)
+          setErrorMessage(null)
         }, 1)
       })
   }, [])
@@ -75,11 +73,12 @@ old number with a new one?`);
           setNewNumber('')
           setFilter({ enabled: true, filter: '' })
           setDisplayPersons(persons.concat(response))
-          setAddedPersonMessage(
+          setErrorStyle('nonerror')
+          setErrorMessage(
             `Added ${newName}`
           )
           setTimeout(() => {
-            setAddedPersonMessage(null)
+            setErrorMessage(null)
           }, 5000)
         })
 
@@ -109,6 +108,22 @@ old number with a new one?`);
           setFilter({ enabled: false, filter: '' })
           setPersons(objectToPass)
           setDisplayPersons(objectToPass)
+          setErrorStyle('nonerror')
+          setErrorMessage(
+            `Contact '${contactinfo.name}' removed from server`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          setErrorStyle('error')
+          setErrorMessage(
+            `Contact '${contactinfo.name}' was already removed from server`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
     }
   }
@@ -135,7 +150,7 @@ old number with a new one?`);
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={AddedPersonMessage} />
+      <Notification style={errorStyle} message={errorMessage} />
       <FilterInput filter={Filter} callOnChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonForm calladdContact={addContact} callPersonchange={handlePersonsChange} defaultPerson={newName} callNumberchange={handleNumberChange} defaultNumber={newNumber} />

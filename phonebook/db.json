@@ -1,21 +1,6 @@
 {
   "persons": [
     {
-      "name": "Marisa Moreno Martinez",
-      "number": "1800 DOGSLAYER",
-      "id": 35
-    },
-    {
-      "name": "Starfire",
-      "number": "1800TEENTITANS",
-      "id": 57
-    },
-    {
-      "name": "Cyborg",
-      "number": "1800HAMBURGUER",
-      "id": 58
-    },
-    {
       "name": "Saria Regina",
       "number": "1800CARELESSPENGUIN",
       "id": 59
@@ -69,11 +54,6 @@
       "name": "Martha Elba Martinez",
       "number": "02320943243",
       "id": 70
-    },
-    {
-      "name": "Gerardfd",
-      "number": "234324",
-      "id": 71
     },
     {
       "name": "Jinx",
